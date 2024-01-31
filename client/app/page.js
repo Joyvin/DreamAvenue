@@ -24,7 +24,6 @@ export default function Home() {
 			<button
 				onClick={() => {
 					signOut(auth);
-					// sessionStorage.removeItem("user");
 				}}
 			>
 				Log Out
