@@ -26,7 +26,7 @@ const Signup = () => {
       // sessionStorage.setItem("user", true);
       setEmail('');
       setPassword('');
-      router.push("/")
+      router.push("/sign-in")
     } catch (err) {
       console.error(err);
     }
@@ -43,7 +43,7 @@ const Signup = () => {
               id="email"
               value={email}
               onChange={handleEmailChange}
-              className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              className="text-white w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
             />
           </div>
@@ -54,7 +54,7 @@ const Signup = () => {
               id="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              className="text-white w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
               required
             />
           </div>

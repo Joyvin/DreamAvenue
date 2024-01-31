@@ -10,16 +10,12 @@ export default function Home() {
   const router = useRouter();
   
   if (!user) {
-    router.push("/sign-up");
-  }
-
-  const handleSignOut = () => {
-    signOut(auth);
+    router.push("/sign-in");
   }
 
   return (
     <div>
-      <button onClick={handleSignOut}>Log Out</button>
+      <button onClick={() => signOut(auth)}>Log Out</button>
       Welcome {user?.email}
     </div>
   );
