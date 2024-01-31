@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract RealEstateToken is ERC721Enumerable, Ownable {
+contract PropertyToken is ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private tokenIdCounter;
 
@@ -18,6 +18,7 @@ contract RealEstateToken is ERC721Enumerable, Ownable {
     struct PropertyDetails {
         string location;
         uint256 size;
+        // string
         // Add other property details as needed
     }
 
@@ -43,7 +44,7 @@ contract RealEstateToken is ERC721Enumerable, Ownable {
     }
 
     function setListingPrice(uint256 newPrice) external onlyOwner {
-        listingPrice = newPrice;
+        listingPrice = newPrice * 10 ** 18;
     }
 
     function purchaseProperty(uint256 tokenId) external payable {
