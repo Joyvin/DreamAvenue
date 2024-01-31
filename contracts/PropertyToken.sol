@@ -3,9 +3,10 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
 contract PropertyToken is ERC721Enumerable, Ownable {
-    uint256 private tokenIdCounter;
+    uint256 public tokenIdCounter;
 
     mapping(uint256 => PropertyDetails) private propertyDetails;
 
@@ -14,9 +15,13 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     mapping(uint256 => PropertyDetails) private toSell;
     mapping(uint256 => RentDetails) private onRent;
 
+    uint256[] allProperties;
+    // PropertyDetails[] tAllProperties;
+
     struct RentDetails {
         uint256 rentAmount;
         uint256 lastPaymentTime;
+        uint256 contractMadeOn;
     }
 
     struct PropertyDetails {
@@ -24,6 +29,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         address tenant;
         uint256 sellingPrice;
         uint256 rentingPrice;
+        uint256 token;
     }
 
     struct OwnershipDetails {
@@ -39,7 +45,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     );
 
     constructor() ERC721("DreamToken", "DRT") Ownable(msg.sender) {
-        tokenIdCounter = 1;
+        tokenIdCounter = 0;
     }
 
     // Tokenize
@@ -49,8 +55,10 @@ contract PropertyToken is ERC721Enumerable, Ownable {
             agreement,
             msg.sender,
             0,
-            0
+            0,
+            tokenIdCounter
         );
+        allProperties.push(tokenIdCounter);
         ownershipHistory[tokenIdCounter].push(
             OwnershipDetails("owner", msg.sender)
         );
@@ -62,7 +70,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         uint256 tokenId,
         uint256 newPrice
     ) external onlyOwner {
-        propertyDetails[tokenId].sellingPrice = newPrice * 10 ** 18;
+        propertyDetails[tokenId].sellingPrice = newPrice * (10 ** 18);
         toSell[tokenId] = propertyDetails[tokenId];
     }
 
@@ -83,6 +91,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
 
         payable(seller).transfer(msg.value);
         delete toSell[tokenId];
+        propertyDetails[tokenId].sellingPrice = 0;
 
         emit PropertyPurchased(buyer, seller, tokenId, msg.value);
     }
@@ -92,7 +101,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         uint256 tokenId,
         uint256 newPrice
     ) external onlyOwner {
-        propertyDetails[tokenId].rentingPrice = newPrice * 10 ** 18;
+        propertyDetails[tokenId].rentingPrice = newPrice * (10 ** 18);
         toRent[tokenId] = propertyDetails[tokenId];
     }
 
@@ -100,6 +109,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     function rentToTenant(uint256 tokenId) external onlyOwner {
         onRent[tokenId] = RentDetails(
             propertyDetails[tokenId].rentingPrice,
+            block.timestamp,
             block.timestamp
         );
     }
@@ -120,15 +130,22 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         return timeElapsed >= secondsInMonth;
     }
 
+    // Check if term of rent is over
+    function checkRentTerm(uint256 tokenId) public view returns (bool) {
+        uint256 timeElapsed = block.timestamp - onRent[tokenId].contractMadeOn;
+        uint256 secondsInMonth = 366 days;
+        return timeElapsed >= secondsInMonth;
+    }
+
     // Get All Properties
-    function getValues() public view returns (PropertyDetails[] memory) {
-        PropertyDetails[] memory values;
-        // uint counter = 0;
-        for (uint i = 0; i < tokenIdCounter; i++) {
-            values[i] = propertyDetails[i];
-            // counter++;
+    function getAllProps() public view returns (PropertyDetails[] memory) {
+        PropertyDetails[] memory tAllProperties = new PropertyDetails[](
+            allProperties.length
+        );
+        for (uint i = 0; i < allProperties.length; i++) {
+            tAllProperties[i] = propertyDetails[allProperties[i]];
         }
-        return values;
+        return tAllProperties;
     }
 
     // Get Details
@@ -145,7 +162,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         return ownershipHistory[tokenId];
     }
 
-    function withdraw() external onlyOwner {
-        payable(owner()).transfer(address(this).balance);
-    }
+    // function withdraw() external onlyOwner {
+    //     payable(owner()).transfer(address(this).balance);
+    // }
 }
