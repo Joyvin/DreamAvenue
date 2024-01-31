@@ -20,6 +20,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     }
 
     struct PropertyDetails {
+        string agreement;
         address tenant;
         uint256 sellingPrice;
         uint256 rentingPrice;
@@ -42,9 +43,14 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     }
 
     // Tokenize
-    function mint() external onlyOwner {
+    function mint(string memory agreement) external onlyOwner {
         _safeMint(msg.sender, tokenIdCounter);
-        propertyDetails[tokenIdCounter] = PropertyDetails(msg.sender, 0, 0);
+        propertyDetails[tokenIdCounter] = PropertyDetails(
+            agreement,
+            msg.sender,
+            0,
+            0
+        );
         ownershipHistory[tokenIdCounter].push(
             OwnershipDetails("owner", msg.sender)
         );
@@ -112,6 +118,17 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         uint256 timeElapsed = block.timestamp - onRent[tokenId].lastPaymentTime;
         uint256 secondsInMonth = 30 days;
         return timeElapsed >= secondsInMonth;
+    }
+
+    // Get All Properties
+    function getValues() public view returns (PropertyDetails[] memory) {
+        PropertyDetails[] memory values;
+        uint counter = 0;
+        for (uint i = 0; i < tokenIdCounter; i++) {
+            values[counter] = propertyDetails[i];
+            counter++;
+        }
+        return values;
     }
 
     // Get Details
