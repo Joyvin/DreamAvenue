@@ -1,7 +1,7 @@
 const slider2Details = [
     {
-        title: "1-1 Betting",
-        desc: "1-1 betting with your friends",
+        title: "Security Measures",
+        desc: "Security measures for your account",
         imgUrl: "/account.png"
     },
     {
@@ -20,8 +20,8 @@ const slider2Details = [
         imgUrl: "/account.png"
     },
     {
-        title: "Dashboard",
-        desc: "Dashboard for your betting history and records",
+        title: "Security Measures",
+        desc: "Security measures for your account",
         imgUrl: "/account.png"
     },
     {
