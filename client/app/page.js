@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 export default function Home() {
   const [user] = useAuthState(auth);
   const router = useRouter();
+  // const userSession = sessionStorage.getItem("user");
   
   if (!user) {
     router.push("/sign-in");
@@ -15,7 +16,10 @@ export default function Home() {
 
   return (
     <div>
-      <button onClick={() => signOut(auth)}>Log Out</button>
+      <button onClick={() => {
+        signOut(auth);
+        // sessionStorage.removeItem("user");
+      }}>Log Out</button>
       Welcome {user?.email}
     </div>
   );
