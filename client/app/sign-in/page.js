@@ -51,7 +51,8 @@ const Signin = () => {
   }
 
   return (
-    <div className="absolute top-[18%] left-[35%] flex items-center justify-center p-8">
+    <div>
+      <div className="flex items-center justify-center p-8">
       <div className="w-[400px] bg-white border border-gray-300 shadow-2xl rounded-lg h-fit p-4">
         <div className="border-gray-300 px-4 py-4">
           <div className="text-2xl font-semibold mb-6">
@@ -109,6 +110,8 @@ const Signin = () => {
           </button>
         </div>
       </div>
+    </div>
+    <img className="fixed bottom-0" src="/wave.svg" alt="" />
     </div>
   );
 };

@@ -6,9 +6,9 @@ import { sliderSettings } from "../data/sliderSettings";
 
 export default function Slider() {
   return (
-    <div className="relative mt-20">
-      <div className="text-center text-3xl font-bold mb-10 text-white">
-        Explore The Best Places
+    <div className="relative mt-10">
+      <div className="text-5xl font-bold xl:ml-32 md:ml-16 ml-4 mb-10 text-white">
+        Explore The Best Places ...
       </div>
       <Swiper {...sliderSettings}>
         <SliderButtons />

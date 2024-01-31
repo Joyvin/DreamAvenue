@@ -1,78 +1,34 @@
 import React from "react";
-import {
-  FaFacebook,
-  FaGithub,
-  FaInstagram,
-  FaTwitter,
-  FaTwitch,
-} from "react-icons/fa";
 
-const Footer = () => {
-  return (
-    <div className="w-full bg-[#ffffff] py-8 md:px-2 px-10">
-      <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-6 border-b-2 border-gray-600 py-8">
-        <img
-          className="col-span-2 w-[20rem]"
-          src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
-          alt=""
-        />
-        <div className="mt-6">
-          <h6 className="font-bold uppercase py-2">Features</h6>
-          <ol>
-            <li className="py-2">Feature1</li>
-            <li className="py-2">Feature1</li>
-            <li className="py-2">Feature1</li>
-          </ol>
-        </div>
-        <div className="mt-6">
-          <h6 className="font-bold uppercase py-2">Links</h6>
-          <ol>
-            <a href="/">
-              <li className="py-2">Home</li>
-            </a>
-            <a href="/about">
-              <li className="py-2">About</li>
-            </a>
-            <a href="/contact">
-              <li className="py-2">Contact</li>
-            </a>
-          </ol>
-        </div>
-        <div className="col-span-2 mt-6 md:pt-2">
-          <p className="font-bold uppercase">Subscribe To Our Newsletter</p>
-          <p className="py-4">
-            The latest news, articles and resources sent to your inbox weekly.
-          </p>
-          <form className="flex flex-col sm:flex-row">
-            <input
-              className="w-full p-2 mr-4 rounded-md mb-2 border-2 border-black"
-              type="email"
-              placeholder="Enter email"
-            />
-            <button
-              className="p-3 mb-2 bg-blue-500 text-white rounded-md"
-              type="submit"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
+const Footer = () => (
+  <div className="w-full flex md:justify-center justify-between items-center flex-col p-4 gradient-bg-footer">
+    <div className="w-full flex sm:flex-row flex-col justify-between items-center my-4">
+      <a href="/">
+      <div className="flex flex-[0.5] justify-center items-center">
+        <img src="/logo.png" alt="logo" className="w-20 mr-4" />
+        <h1 className="text-white text-4xl font-extrabold">Dream Avenue</h1>
       </div>
-
-      <div className="flex flex-col max-w-[1280px] px-2 py-4 m-auto justify-between sm:flex-row text-center text-gray-500 items-center">
-        <p>2024 Dream Avenue, All rights reserved.</p>
-        <div className="flex justify-between sm:w-[300px] pt-4 text-2xl gap-2">
-          <FaFacebook />
-          <FaGithub />
-          <FaInstagram />
-          <FaTwitch />
-          <FaTwitter />
-        </div>
-      </div>
-      <div className="flex flex-col max-w-[1280px] h-24 px-2 py-4 m-auto justify-between sm:flex-row text-center text-gray-500 items-center">
+      </a>
+      <div className="flex flex-1 justify-evenly items-center flex-wrap sm:mt-0 mt-5 w-full">
+        <a href="/"><p className="text-white text-base text-center mx-2 cursor-pointer">Home</p></a>
+        <a href="#"><p className="text-white text-base text-center mx-2 cursor-pointer">Rent</p></a>
+        <a href="/sell"><p className="text-white text-base text-center mx-2 cursor-pointer">Sell</p></a>
+        <a href="#"><p className="text-white text-base text-center mx-2 cursor-pointer">Buy</p></a>
       </div>
     </div>
-  );
-};
+
+    <div className="flex justify-center items-center flex-col mt-5">
+      <p className="text-white text-sm text-center">Come join us and hear for the unexpected miracle</p>
+      <p className="text-white text-sm text-center font-medium mt-2">dreamavenue@gmail.com</p>
+    </div>
+
+    <div className="sm:w-[90%] w-full h-[0.25px] bg-gray-400 mt-5 " />
+
+    <div className="sm:w-[90%] w-full flex justify-between items-center mt-3">
+      <p className="text-white text-left text-xs">@dreamavenue2023</p>
+      <p className="text-white text-right text-xs">All rights reserved</p>
+    </div>
+  </div>
+);
 
 export default Footer;
