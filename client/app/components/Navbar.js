@@ -20,7 +20,7 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = React.useState(false);
 
   return (
-    <nav className="w-full flex justify-between lg:justify-center items-center lg:gap-20 gap-6 p-4 ml-10">
+    <nav className="w-full flex justify-between lg:justify-center items-center lg:gap-20 gap-6 p-4">
       <a href="/">
         <div className="flex justify-center items-center gap-2">
           <img src="/logo.png" alt="logo" className="w-20 cursor-pointer" />
@@ -31,14 +31,14 @@ const Navbar = () => {
         <li className="mx-4 cursor-pointer">
           <a href="/">Home</a>
         </li>
-        <li className="mx-4 cursor-pointer">
+        {/* <li className="mx-4 cursor-pointer">
           <a href="#">Rent</a>
-        </li>
-        <li className="mx-4 cursor-pointer">
-          <a href="/sell">Sell</a>
-        </li>
+        </li> */}
         <li className="mx-4 cursor-pointer">
           <a href="#">Buy</a>
+        </li>
+        <li className="mx-4 cursor-pointer">
+          <a href="/list">List Property</a>
         </li>
         <li className="mx-4 cursor-pointer">
           <a href="/addProperty">Add Property</a>
@@ -95,14 +95,14 @@ const Navbar = () => {
             <li className="mx-4 cursor-pointer my-2 text-lg">
               <a href="/">Home</a>
             </li>
-            <li className="mx-4 cursor-pointer my-2 text-lg">
+            {/* <li className="mx-4 cursor-pointer my-2 text-lg">
               <a href="#">Rent</a>
-            </li>
-            <li className="mx-4 cursor-pointer my-2 text-lg">
-              <a href="/sell">Sell</a>
-            </li>
+            </li> */}
             <li className="mx-4 cursor-pointer my-2 text-lg">
               <a href="#">Buy</a>
+            </li>
+            <li className="mx-4 cursor-pointer my-2 text-lg">
+              <a href="/list">List Property</a>
             </li>
             <li className="mx-4 cursor-pointer my-2 text-lg">
               <a href="/addProperty">Add Property</a>

@@ -1,19 +1,16 @@
 "use client";
+import { useState } from 'react';
 import { BiDetail } from 'react-icons/bi';
-import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs, getDoc, query, onSnapshot, deleteDoc, doc, where } from "firebase/firestore";
-import { db, auth } from '../firebase';
+import { v4 as uuidv4 } from 'uuid';
+import { collection, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/navigation";
-import { storage } from '../firebase';
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { v4 } from 'uuid';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { db, auth } from '../firebase';
 
-export default function page() {
+export default function Page() {
     const [user] = useAuthState(auth);
     const [images, setImages] = useState([]);
-    const [items, setItems] = useState([]);
-    const [newItem, setNewItem] = useState({ title: "", description: "", address: "", price: "" });
+    const [newItem, setNewItem] = useState({ name: "", area: "", bhk: "", address: "", apartType: "" });
 
     const handleImageChange = (e) => {
         const fileList = e.target.files;
@@ -21,97 +18,94 @@ export default function page() {
         setImages(imageFiles);
     };
 
-    useEffect(() => {
-        if (user) {
-            const q = query(collection(db, 'items'), where("userId", "==", user.uid));
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                let itemsArr = [];
+    const uploadImages = async () => {
+        const storage = getStorage();
+        const downloadURLs = [];
 
-                querySnapshot.forEach((doc) => {
-                    itemsArr.push({ ...doc.data(), id: doc.id });
-                });
-                setItems(itemsArr);
+        for (const image of images) {
+            const storageRef = ref(storage, `propertyImages/${uuidv4()}_${image.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, image);
+
+            await new Promise((resolve, reject) => {
+                uploadTask.on('state_changed',
+                    null,
+                    reject,
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref)
+                            .then((url) => {
+                                downloadURLs.push(url);
+                                resolve();
+                            })
+                            .catch(reject);
+                    }
+                );
             });
-            return () => unsubscribe();
         }
-    }, [user]);
+
+        return downloadURLs;
+    };
 
     const addItem = async (e) => {
         e.preventDefault();
-        if (newItem.title !== "" || newItem.description !== "" || newItem.address !== "" || newItem.price !== "") {
-            await addDoc(collection(db, "items"), {
-                title: newItem.title.trim(),
-                description: newItem.description.trim(),
+        if (newItem.name !== "" || newItem.area !== "" || newItem.bhk !== "" || newItem.address !== "" || newItem.apartType !== "") {
+            const downloadURLs = await uploadImages();
+            const itemData = {
+                name: newItem.name.trim(),
+                area: newItem.area.trim(),
+                bhk: newItem.bhk.trim(),
                 address: newItem.address.trim(),
-                price: newItem.price,
-                userId: user.uid
-            });
-            setNewItem({ title: "", description: "", address: "", price: "" });
+                apartType: newItem.apartType,
+                userId: user.uid,
+                images: downloadURLs
+            };
+            await addDoc(collection(db, "items"), itemData);
+            setNewItem({ name: "", area: "", bhk: "", address: "", apartType: "" });
+            setImages([]);
         }
-        const storageRef = ref(storage, 'propertyImages/' + images[0].name + v4());
-        const uploadTask = uploadBytesResumable(storageRef, images[0]);
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-            },
-            (error) => {
-                console.log(error);
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-                });
-            }
-        );
-    }
+    };
 
     return (
-        <div className='flex items-center justify-center'>
-            <form className='flex flex-col gap-4 justify-center rounded-xl bg-white w-fit p-10'>
-                <h1 className='text-6xl text-[#02184D]'>Post Your Property</h1>
-                <div className='flex flex-col gap-4'>
-                    <h2 className='text-xl'>Add images of your property</h2>
-                    <input type='file' multiple onChange={handleImageChange} />
+        <div className="flex items-center justify-center">
+            <form className="w-full max-w-lg bg-white rounded-lg shadow-md p-8">
+                <h1 className="text-3xl text-center font-semibold text-gray-800 mb-6">Add Your Property</h1>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Add images of your property</label>
+                    <input type="file" multiple onChange={handleImageChange} className="py-2 px-3 w-full border border-gray-300 rounded-lg" />
                 </div>
-                <div className='grid grid-cols-3 items-center'>
-                    {
-                        images.map(item => {
-                            return (
-
-                                <img
-                                    style={{ padding: '10px' }}
-                                    width={150} height={100}
-                                    src={item ? URL.createObjectURL(item) : null} />
-                            )
-                        })
-                    }
+                <div className="grid grid-cols-3 gap-4">
+                    {images.map((item, index) => (
+                        <img key={index} style={{ padding: '10px' }} width={150} height={100} src={URL.createObjectURL(item)} className="object-cover rounded-lg" alt={`Image ${index + 1}`} />
+                    ))}
                 </div>
-                <div className='flex flex-col gap-4'>
-                    <label htmlFor='title'>Title</label>
-                    <input value={newItem.title} onChange={(e) => setNewItem({ ...newItem, title: e.target.value })} className='bg-slate-100 h-14 p-4 rounded-lg' type='text' name='title' id='title' placeholder='Enter title' />
-                    <label htmlFor='description'>Description</label>
-                    <input value={newItem.description} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} className='bg-slate-100 h-14 p-4 rounded-lg' type='text' name='description' id='description' placeholder='Enter description' />
-                    <label htmlFor='address'>Address</label>
-                    <input value={newItem.address} onChange={(e) => setNewItem({ ...newItem, address: e.target.value })} className='bg-slate-100 h-14 p-4 rounded-lg border-[3px]' type='text' name='address' id='address' placeholder='Enter address' />
-                    <label htmlFor='price'>Price</label>
-                    <input value={newItem.price} onChange={(e) => setNewItem({ ...newItem, price: e.target.value })} className='bg-slate-100 h-14 p-4 rounded-lg border-[3px]' type='number' name='price' id='price' placeholder='Enter price' />
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Property Name</label>
+                    <input value={newItem.name} onChange={(e) => setNewItem({ ...newItem, name: e.target.value })} className="py-2 px-3 w-full border border-gray-300 rounded-lg" type="text" placeholder="Enter name" />
                 </div>
-                <button onClick={addItem} className='bg-[#f9cb6f] flex gap-2 items-center w-fit rounded-xl p-4' type='submit'>
-                    <span>Submit</span>
-                    <BiDetail />
-                </button>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Area in sq. ft.</label>
+                    <input value={newItem.area} onChange={(e) => setNewItem({ ...newItem, area: e.target.value })} className="py-2 px-3 w-full border border-gray-300 rounded-lg" type="text" placeholder="Enter area" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">BHK</label>
+                        <input value={newItem.bhk} onChange={(e) => setNewItem({ ...newItem, bhk: e.target.value })} className="py-2 px-3 w-full border border-gray-300 rounded-lg" type="text" placeholder="Enter bhk" />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Apartment Type</label>
+                        <select value={newItem.apartType} onChange={(e) => setNewItem({ ...newItem, apartType: e.target.value })} className="py-2 px-3 w-full border border-gray-300 rounded-lg">
+                            <option value="">Select</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Independent House">Independent House</option>
+                            <option value="Villa">Villa</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="mb-4 mt-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Address</label>
+                    <input value={newItem.address} onChange={(e) => setNewItem({ ...newItem, address: e.target.value })} className="py-2 px-3 w-full border border-gray-300 rounded-lg" type="text" placeholder="Enter address" />
+                </div>
+                <button onClick={addItem} className="w-full bg-[#f9cb6f] hover:bg-[#ffbf3e] text-white font-bold py-2 px-4 rounded">Submit</button>
             </form>
         </div>
-    )
-}
-
-const SliderButtons = () => {
-    const swiper = useSwiper();
-    return (
-        <div className='flex justify-center gap-[1rem] pt-4'>
-            <button className='text-[1.2rem] py-[0.2rem] px-[0.8rem] text-[#f9cb6f] border-none rounded-[5px] bg-[#f6edda] cursor-pointer' onClick={() => swiper.slidePrev()}>❰</button>
-            <button className='text-[1.2rem] py-[0.2rem] px-[0.8rem] text-[#f9cb6f] border-none rounded-[5px] bg-[#f6edda] cursor-pointer' onClick={() => swiper.slideNext()}>❱</button>
-        </div>
-    )
+    );
 }
