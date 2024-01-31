@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,24 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      <img src="/logo.png" alt="" className="h-[199px] w-[566px]" />
+        <Navbar />
         {children}
-        <div className='z-10 fixed bottom-0 footer-bg w-full flex items-center gap-20'>
-                <div className='flex items-center p-4 gap-12'>
-                    <a href='/sign-up'><img src="account.png" alt="" className="w-20" /></a>
-                    <div className='landingsearchbar p-2 w-[340px] h-[65px] flex items-center'>
-                        <img src='/Search.png' alt="" className="" />
-                    </div>
-                </div>
-                <div className='flex gap-10 items-center'>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>Rent</a>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>Buy</a>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>Sell</a>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>Services</a>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>About Us</a>
-                    <a href="#" className='text-[#BCA875] text-4xl font-normal'>Help</a>
-                </div>
-            </div>
+        <Footer />
       </body>
     </html>
   );

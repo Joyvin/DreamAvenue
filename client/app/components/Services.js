@@ -14,7 +14,7 @@ import {
       <div>
         <div className="relative mx-auto flex flex-col items-center lg:flex-row lg:gap-20 justify-center mt-28 mb-20">
           <header className="lg:hidden block text-center pb-10">
-            <h2 className="text-[13px] tracking-[1px] font-bold m-0 text-blue-600 uppercase">
+            <h2 className="text-[13px] tracking-[1px] font-bold m-0 text-[#f9cb6f] uppercase">
               Services
             </h2>
             <p className="mt-[10px] mx-0 mb-0 p-0 sm:text-[38px] sm:leading-[42px] font-bold text-white text-[28px] leading-[32px]">
@@ -30,7 +30,7 @@ import {
           </div>
           <div className="flex gap-[0.5rem] flex-col items-start">
             <header className="lg:block hidden">
-              <h2 className="text-[13px] tracking-[1px] font-bold m-0 text-[#BCA875] uppercase">
+              <h2 className="text-[13px] tracking-[1px] font-bold m-0 text-[#f9cb6f] uppercase">
                 Services
               </h2>
               <p className="mt-[10px] mx-0 mb-0 p-0 sm:text-[38px] sm:leading-[42px] font-bold text-white text-[28px] leading-[32px]">
@@ -51,13 +51,13 @@ import {
                   >
                     <AccordionItemHeading>
                       <AccordionItemButton className="flex justify-between cursor-pointer bg-white p-[1rem] w-full">
-                        <div className="flex items-center text-[#BCA875] justify-center p-[10px] bg-[#faecca] rounded-[5px]">
+                        <div className="flex items-center text-[#f9cb6f] justify-center p-[10px] bg-[#faecca] rounded-[5px]">
                           {item.icon}
                         </div>
                         <span className="sm:text-[25px] sm:leading-[42px] font-bold text-[#012970] text-[18px] leading-[32px]">
                           {item.heading}
                         </span>
-                        <div className="flex items-center text-[#BCA875] justify-center p-[10px] bg-[#faecca] rounded-[5px]">
+                        <div className="flex items-center text-[#f9cb6f] justify-center p-[10px] bg-[#faecca] rounded-[5px]">
                           <MdOutlineArrowDropDown size={20} />
                         </div>
                       </AccordionItemButton>
