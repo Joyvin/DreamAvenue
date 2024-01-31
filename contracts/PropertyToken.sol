@@ -123,10 +123,10 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     // Get All Properties
     function getValues() public view returns (PropertyDetails[] memory) {
         PropertyDetails[] memory values;
-        uint counter = 0;
+        // uint counter = 0;
         for (uint i = 0; i < tokenIdCounter; i++) {
-            values[counter] = propertyDetails[i];
-            counter++;
+            values[i] = propertyDetails[i];
+            // counter++;
         }
         return values;
     }
