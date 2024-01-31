@@ -11,9 +11,9 @@ const Footer = () => (
       </a>
       <div className="flex flex-1 justify-evenly items-center flex-wrap sm:mt-0 mt-5 w-full">
         <a href="/"><p className="text-white text-base text-center mx-2 cursor-pointer">Home</p></a>
-        <a href="#"><p className="text-white text-base text-center mx-2 cursor-pointer">Rent</p></a>
-        <a href="/sell"><p className="text-white text-base text-center mx-2 cursor-pointer">Sell</p></a>
+        {/* <a href="#"><p className="text-white text-base text-center mx-2 cursor-pointer">Rent</p></a> */}
         <a href="#"><p className="text-white text-base text-center mx-2 cursor-pointer">Buy</p></a>
+        <a href="/list"><p className="text-white text-base text-center mx-2 cursor-pointer">Sell</p></a>
       </div>
     </div>
 

@@ -25,7 +25,7 @@ const Navbar = () => {
 	const [toggleMenu, setToggleMenu] = React.useState(false);
 
 	return (
-		<nav className="w-full flex justify-between lg:justify-center items-center lg:gap-20 gap-6 p-4 ml-10">
+		<nav className="w-full flex justify-between lg:justify-center items-center lg:gap-20 gap-6 p-4">
 			<a href="/">
 				<div className="flex justify-center items-center gap-2">
 					<img
@@ -42,9 +42,9 @@ const Navbar = () => {
 				<li className="mx-4 cursor-pointer">
 					<a href="/">Home</a>
 				</li>
-				<li className="mx-4 cursor-pointer">
+				{/* <li className="mx-4 cursor-pointer">
 					<a href="#">Rent</a>
-				</li>
+				</li> */}
 				<li className="mx-4 cursor-pointer">
 					<a href="/sell">Sell</a>
 				</li>

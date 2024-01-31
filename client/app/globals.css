@@ -5,6 +5,7 @@
 body {
   background: url("../public/bg.svg"), lightgray 50% / cover no-repeat;
   background-color: #293040;
+  background-size: cover;
 }
 
 .landingsearchbar {
