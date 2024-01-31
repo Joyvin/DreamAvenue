@@ -29,7 +29,7 @@ contract RealEstateToken is ERC721Enumerable, Ownable {
     );
 
     constructor(uint256 price) ERC721("DreamToken", "DRT") {
-        listingPrice = price * 10 ** 18;
+        // listingPrice = price * 10 ** 18;
     }
 
     function mint(string memory location, uint256 size) external onlyOwner {
@@ -54,16 +54,12 @@ contract RealEstateToken is ERC721Enumerable, Ownable {
         address seller = ownerOf(tokenId);
         address buyer = msg.sender;
 
-        // Transfer the token to the buyer
         _transfer(seller, buyer, tokenId);
 
-        // Record the new owner in the ownership history
         ownershipHistory[tokenId].push(buyer);
 
-        // Transfer funds to the seller
         payable(seller).transfer(msg.value);
 
-        // Emit an event for the purchase
         emit PropertyPurchased(buyer, seller, tokenId, msg.value);
     }
 
@@ -82,7 +78,6 @@ contract RealEstateToken is ERC721Enumerable, Ownable {
         return ownershipHistory[tokenId];
     }
 
-    // Function to withdraw accumulated ETH from the contract (onlyOwner)
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
     }
