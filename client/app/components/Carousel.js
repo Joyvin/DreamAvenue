@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import sliderDetails from "../data/sliderDetails";
 import { sliderSettings } from "../data/sliderSettings";
+import { Link } from "react-router-dom";
 
 export default function Slider() {
   return (
@@ -14,6 +15,7 @@ export default function Slider() {
         <SliderButtons />
         {sliderDetails.map((card, i) => (
           <SwiperSlide key={i}>
+            <Link to={`/buy/${card.id}`}>
             <div className="w-[25rem] opp-card hover:scale-[1.025] hover:cursor-pointer flex flex-col px-[1rem] pb-[1rem] pt-[1.3rem] m-auto">
               <img
                 className="w-[25rem] h-[20rem] rounded-tr-[15px] rounded-tl-[15px]"
@@ -29,6 +31,7 @@ export default function Slider() {
                 <p className="text-xl mt-4 font-bold">${card.price}/night</p>
               </div>
             </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
