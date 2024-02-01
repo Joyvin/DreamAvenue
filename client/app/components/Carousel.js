@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import sliderDetails from "../data/sliderDetails";
 import { sliderSettings } from "../data/sliderSettings";
+import { Link } from "react-router-dom";
 
 export default function Slider() {
 	return (
@@ -29,7 +30,7 @@ export default function Slider() {
 									{card.rating}/10 ({card.review} reviews)
 								</p>
 								<p className="text-xl mt-4 font-bold">
-									{card.price} ETH
+									${card.price}/night
 								</p>
 							</div>
 						</div>
