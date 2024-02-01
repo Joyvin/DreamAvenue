@@ -6,6 +6,7 @@ import {
 	GoogleMap,
 	LoadScript,
 } from "@react-google-maps/api";
+import { contractInstance } from "../components/ContractConnect";
 
 const containerStyle = {
 	width: "100%",
@@ -24,7 +25,7 @@ const options = {
 	fullscreenControl: true,
 };
 
-const StreetView = () => {
+const StreetView = async () => {
 	const [map, setMap] = useState(null);
 	const onLoad = React.useCallback((map) => {
 		setMap(map);

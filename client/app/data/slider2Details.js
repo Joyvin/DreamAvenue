@@ -1,44 +1,44 @@
 const slider2Details = [
-    {
-        title: "Security Measures",
-        desc: "Security measures for your account",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Real Time Updates",
-        desc: "Real time data changes and updation",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Security Measures",
-        desc: "Security measures for your account",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "User Engagement",
-        desc: "User engagement and chatting for more fun",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Security Measures",
-        desc: "Security measures for your account",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Fast and simple to use",
-        desc: "User friendly UI for more user engagement",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Transaction Management",
-        desc: "Transaction management for your betting",
-        imgUrl: "/account.png"
-    },
-    {
-        title: "Support and Help Center",
-        desc: "Support and help center for your queries",
-        imgUrl: "/account.png"
-    }
+	{
+		title: "Blockchain Integration",
+		desc: "Integration of blockchain for improved security",
+		imgUrl: "/slide1.svg",
+	},
+	{
+		title: "Fractional Ownership",
+		desc: "Feature for property owners",
+		imgUrl: "/slide2.svg",
+	},
+	{
+		title: "Smart Contracts",
+		desc: "Security measures for your account",
+		imgUrl: "/slide3.svg",
+	},
+	{
+		title: "Comprehensive Listings",
+		desc: "Real time data changes and updation",
+		imgUrl: "/slide4.svg",
+	},
+	{
+		title: "User Profiles",
+		desc: "User friendly UI for more user engagement",
+		imgUrl: "/slide5.svg",
+	},
+	{
+		title: "Secure Payments",
+		desc: "Secure transactions at ease",
+		imgUrl: "/slide6.svg",
+	},
+	{
+		title: "Market Analytics",
+		desc: "Advanced analysis of properties",
+		imgUrl: "/slide7.svg",
+	},
+	{
+		title: "Real-time Auctions",
+		desc: "Support and help center for your queries",
+		imgUrl: "/slide8.svg",
+	},
 ];
 
 export default slider2Details;

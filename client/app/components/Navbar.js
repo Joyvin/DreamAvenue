@@ -10,7 +10,7 @@ import { db, auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import Wallet from "./wallet";
+import MyWallet from "./wallet";
 
 // import logo from "../images/logo.svg";
 
@@ -46,7 +46,7 @@ const Navbar = () => {
 					<a href="#">Rent</a>
 				</li> */}
 				<li className="mx-4 cursor-pointer">
-					<a href="/sell">Sell</a>
+					<a href="#">Sell</a>
 				</li>
 				<li className="mx-4 cursor-pointer">
 					<a href="#">Buy</a>
@@ -54,14 +54,19 @@ const Navbar = () => {
 				<li className="mx-4 cursor-pointer">
 					<a href="/addProperty">Add Property</a>
 				</li>
+				<li className="mx-4 cursor-pointer">
+					<a href="/list">List</a>
+				</li>
 				<ul className="flex justify-center items-center mr-4 lg:ml-20 ml-0 gap-4">
-					<li className="bg-white flex justify-center items-center rounded-full cursor-pointer  py-2 px-7">
-						<Wallet />
-						{/* <AiFillPlayCircle className="text-black mr-2" />
+					{user && (
+						<li className="bg-white flex justify-center items-center rounded-full cursor-pointer py-2 px-7">
+							<MyWallet />
+							{/* <AiFillPlayCircle className="text-black mr-2" />
 						<p className="text-black text-base font-semibold">
-							<a href="#">Connect Wallet</a>
+							<a href="#">Connect MyWallet</a>
 						</p> */}
-					</li>
+						</li>
+					)}
 					{!user ? (
 						<li className="bg-[#f9cb6f] flex justify-center items-center rounded-full cursor-pointer hover:bg-[#ffbf3e] py-2 px-7">
 							<AiOutlineLogin className="text-white mr-2" />
@@ -110,16 +115,16 @@ const Navbar = () => {
 							<a href="/">Home</a>
 						</li>
 						<li className="mx-4 cursor-pointer my-2 text-lg">
-							<a href="#">Rent</a>
-						</li>
-						<li className="mx-4 cursor-pointer my-2 text-lg">
-							<a href="/sell">Sell</a>
+							<a href="#">Sell</a>
 						</li>
 						<li className="mx-4 cursor-pointer my-2 text-lg">
 							<a href="#">Buy</a>
 						</li>
 						<li className="mx-4 cursor-pointer my-2 text-lg">
 							<a href="/addProperty">Add Property</a>
+						</li>
+						<li className="mx-4 cursor-pointer my-2 text-lg">
+							<a href="/list">List Property</a>
 						</li>
 					</ul>
 				)}

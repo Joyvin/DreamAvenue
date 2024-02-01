@@ -49,7 +49,9 @@ contract PropertyToken is ERC721Enumerable, Ownable {
     }
 
     // Tokenize
-    function mint(string memory agreement) external onlyOwner {
+    function mint(
+        string memory agreement
+    ) external onlyOwner returns (uint256) {
         _safeMint(msg.sender, tokenIdCounter);
         propertyDetails[tokenIdCounter] = PropertyDetails(
             agreement,
@@ -62,7 +64,7 @@ contract PropertyToken is ERC721Enumerable, Ownable {
         ownershipHistory[tokenIdCounter].push(
             OwnershipDetails("owner", msg.sender)
         );
-        tokenIdCounter++;
+        return tokenIdCounter++;
     }
 
     // Sell

@@ -5,9 +5,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState, useLayoutEffect } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Link from "next/link";
-import { Wallet2 } from "lucide-react";
+import { Wallet } from "lucide-react";
 
-export default function Wallet() {
+export default function MyWallet() {
 	const account = useAccount();
 	const { connectors, connect, status } = useConnect();
 	const { disconnect } = useDisconnect();
@@ -41,20 +41,24 @@ export default function Wallet() {
 						onClick={() => openModal()}
 						// className="inline-flex items-center gap-2 rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50"
 					>
-						<AiFillPlayCircle className="text-black mr-2" />
-						<p className="text-black text-base font-semibold">
-							<a href="#">Connect Wallet</a>
-						</p>
+						<div className="flex justify-center items-center">
+							<Wallet className="text-black mr-2" />
+							<p className="text-black text-base font-semibold">
+								<a href="#">Connect Wallet</a>
+							</p>
+						</div>
 					</button>
 				) : (
 					<button
 						onClick={() => disconnect()}
 						// className="inline-flex items-center gap-2 rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50"
 					>
-						<AiFillPlayCircle className="text-black mr-2" />
-						<p className="text-black text-base font-semibold">
-							<a href="#">Disconnect Wallet</a>
-						</p>
+						<div className="flex justify-center items-center">
+							<Wallet className="text-black mr-2" />
+							<p className="text-black text-base font-semibold">
+								<a href="#">Disconnect Wallet</a>
+							</p>
+						</div>
 					</button>
 				)}
 			</div>
